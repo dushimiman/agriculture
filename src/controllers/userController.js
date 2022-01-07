@@ -42,6 +42,13 @@ static async deleteOneUser(req,res){
 
     return res .status(200).json({message:"user is deleted"})
 }
+static async updateUser(req,res){
+    const users = await UserInfos.findByIdAndUpdate(req.params.id,req.body,{new:true});
+    if(!users){
+        return res.status(400).json({error:"user is not updated"});
+    }
+    return res.status(200).json({message:"user is already updated"})
+}
 
 }
 
