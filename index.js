@@ -5,7 +5,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
+import productsroute from "./src/routes/productsroute"
 dotenv.config({path:"./.env"})
 const app = express();
 
@@ -13,6 +13,9 @@ const app = express();
 
  	
 app.use(bodyParser.json());
+app.use("/products",productsroute);
+
+
 
  	
 
