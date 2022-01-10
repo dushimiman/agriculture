@@ -1,5 +1,4 @@
 
-
 import UserInfos from "../models/user";
 
 class UserController {
@@ -7,7 +6,6 @@ class UserController {
  //Create user 
  	
  static async createUser(req, res) {
- 	
    const user = await UserInfos.create(req.body);
  	
    if (!user) { 	
