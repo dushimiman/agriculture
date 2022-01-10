@@ -27,9 +27,13 @@ const userSchema= new Mongoose.Schema(
 
         type:String,
 
+
         default:"buyer",
 
         enum:["admin", "buyer","seller"]
+
+       
+
 
     }
 

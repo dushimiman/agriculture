@@ -1,5 +1,4 @@
 
-
 import UserInfos from "../models/user";
 import bcrypt from "bcrypt";
 import tokenAuth from "../helpers/tokenAuth";
@@ -9,9 +8,11 @@ class UserController {
  //Create user 
  	
  static async createUser(req, res) {
+
      const hashPassword = bcrypt.hashSync(req.body.password,10) 
      req.body.password = hashPassword;
  	
+
    const user = await UserInfos.create(req.body);
  	
    if (!user) { 	
