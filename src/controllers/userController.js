@@ -1,12 +1,16 @@
 
 
 import UserInfos from "../models/user";
+import bcrypt from "bcrypt";
+import tokenAuth from "../helpers/tokenAuth";
 
 class UserController {
  	
  //Create user 
  	
  static async createUser(req, res) {
+     const hashPassword = bcrypt.hashSync(req.body.password,10) 
+     req.body.password = hashPassword;
  	
    const user = await UserInfos.create(req.body);
  	
@@ -48,6 +52,19 @@ static async updateUser(req,res){
         return res.status(400).json({error:"user is not updated"});
     }
     return res.status(200).json({message:"user is already updated"})
+}
+//login function
+static async userLogin(req,res){
+    const user = await UserInfos.findOne({email:req.body.email});
+    if(!user){
+        return res.status(400).json({error:"user not found"});
+    }
+    if(bcrypt.compareSync(req.body.password,user.password)){
+        user.password=null;
+        const token = tokenAuth.tokenGenerator({user:user});
+        return res.status(200).json({message:"user succesfully logged in",token:token, data:user});
+    }
+    return res.status(400).json({error:"password is wrong"})
 }
 
 }
