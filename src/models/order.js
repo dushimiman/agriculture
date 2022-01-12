@@ -1,37 +1,34 @@
 import mongoose from "mongoose";
 const agricultureSchema = new mongoose.Schema(
 
-    {
-        userId:String,
-        productId:String,
-        status:String,
-        address:String,
+{
+        
   
-    //   user: {
+      user: {
   
-    //     type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.ObjectId,
   
-    //     ref: "User",
+        ref: "User",
   
-    //   },
+      },
   
-    //   product: {
+      product: {
   
-    //     type: mongoose.Schema.ObjectId,
+        type: mongoose.Schema.ObjectId,
   
-    //     ref: "product",
+        ref: "products",
   
-    //   },
+      },
   
-    //   status: {
+      status: {
   
-    //     type: String,
+        type: String,
   
-    //     enum: ["pending", "accepted", "declined", "canceled"],
+        enum: ["pending", "accepted", "declined", "canceled"],
   
-    //     default: "pending",
+        default: "pending",
   
-    //   },
+      },
   
     },
   
@@ -42,6 +39,16 @@ const agricultureSchema = new mongoose.Schema(
     }
   
   );
+  agricultureSchema.pre(/^find/, function (next) {
+    this.populate({
+      
+      path:"user",
+      select: "firstname lastname userPhone email address gender",
+    }).populate({
+      path:"product",
+    });
+    next();
+  });
   const Order = mongoose.model("Order",agricultureSchema);
 
  
