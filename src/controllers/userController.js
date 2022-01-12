@@ -2,6 +2,7 @@
 import UserInfos from "../models/user";
 import bcrypt from "bcrypt";
 import tokenAuth from "../helpers/tokenAuth";
+import sendSms from "../helpers/sendSms";
 
 class UserController {
  	
