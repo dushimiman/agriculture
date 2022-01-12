@@ -10,8 +10,7 @@ const userRouter = express.Router();
  Validator.newAccountRules(),
  Validator.ValidatorInput,
   UserController.createUser)
-
-
+  
 userRouter.post("/register", UserController.createUser)
 userRouter.get("/all",UserController.getallUser)
 userRouter.get("/:id",UserController.getOneUser)

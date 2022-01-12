@@ -19,7 +19,7 @@ const isUserExist = async (req,res,next)=>{
         if(name==="tokenExpiredError"){
         return res.status(400).json({error:"token is expired"})
     }
-    console.log(data);
+    // console.log(data);
     req.user=data.user;
     const user = await UserInfos.findById(req.user._id)
     return next();

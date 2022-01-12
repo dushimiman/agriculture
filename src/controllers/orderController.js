@@ -1,24 +1,36 @@
-import Order from "../models/order";
+
 import  orderInfo  from "../models/order";
+import products from "../models/products";
 class orderController{
 
     static async createOrder(req, res){
-        const Order = await orderInfo.create(req.body);
+        
+        const Order = await orderInfo.create({user:req.user._id, product:req.params.id});
  	
         if (!Order) { 	
           return res.status(404).json({ error: "order not registered" }); 	
         } 	
         return res 	
           .status(200) 	
-          .json({ message: "order created successfully", data: Order }); 	
+          .json({ message: "order created successfully", data: Order,  }); 	
       }
 
-      static async getallOrder(req,res){
-        const Order = await orderInfo.find(req.body);
+      static async getAllOrderbyUserId(req,res){
+        console.log(req.user._id)
+        const Order = await orderInfo.find({user:req.user._id});
         if (!Order){
             return res.status(400).json({error:"Order not registerd"});
         }
-        return res .status(200).json({message:"order is found",data: Order});
+        return res.status(200).json({message:"order is found",data: Order});
+    }
+
+    static async getAllOrders(req,res){
+       
+        const Order = await orderInfo.find();
+        if (!Order){
+            return res.status(400).json({error:"Order not registerd"});
+        }
+        return res.status(200).json({message:"order is found",data: Order});
     }
 
     static async getOneOrder(req,res){
