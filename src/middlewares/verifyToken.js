@@ -1,7 +1,9 @@
-import { userInfo } from "os";
+// import { userInfo } from "os";
 import {nextTick} from "process";
 import TokenAuth from "../helpers/tokenAuth";
 import UserInfos from "../models/user";
+
+
 
 const isUserExist = async (req,res,next)=>{
     try{
@@ -17,9 +19,9 @@ const isUserExist = async (req,res,next)=>{
         if(name==="tokenExpiredError"){
         return res.status(400).json({error:"token is expired"})
     }
-    console.log(data);
+    // console.log(data);
     req.user=data.user;
-    const user = await userInfo.findById(req.user._id)
+    const user = await UserInfos.findById(req.user._id)
     return next();
     }
     catch(error){
