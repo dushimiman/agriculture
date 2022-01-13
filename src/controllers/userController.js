@@ -2,6 +2,7 @@
 import UserInfos from "../models/user";
 import bcrypt from "bcrypt";
 import tokenAuth from "../helpers/tokenAuth";
+import sendSms from "../helpers/sendSms ";
 
 class UserController {
  	
@@ -66,6 +67,15 @@ static async userLogin(req,res){
         return res.status(200).json({message:"user succesfully logged in",token:token, data:user});
     }
     return res.status(400).json({error:"password is wrong"})
+}
+static async changeOrderStatus(req,res){
+    const {id,status}=req.body;
+    const order=await orderInfos.findByIdAndUpdate(id,{status:status},{new:true})
+    if(!order){
+        return res.status(400).json({error:"failed to update status"});
+    }
+    sendSms(!order.user.userName, order.products.productname, order._id, order.user.phone)
+    return res.status(200).json({message:"success", data: order});
 }
 
 }

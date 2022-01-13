@@ -10,8 +10,11 @@ const userRouter = express.Router();
  Validator.newAccountRules(),
  Validator.ValidatorInput,
   UserController.createUser)
+
+//import verfyAccess from "../middlewares/verifyAccess"
   
 userRouter.post("/register", UserController.createUser)
+
 userRouter.get("/all",UserController.getallUser)
 userRouter.get("/:id",UserController.getOneUser)
 userRouter.delete("/:id",UserController.deleteOneUser)
