@@ -1,30 +1,37 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const productsSchema = new mongoose.Schema(
-   
-    {
-        
-            productname: String,
-            description: String,
-            availablequantity: String,
-            date: String,
-            price: String,
-            // user:{
-            //     type:mongoose.Schema.ObjectId,
-            //     ref:'User'},
+  {
+    productname: String,
+    description: String,
+    availablequantity: String,
+    date: String,
+    price: String,
+    seller:{
+        type:mongoose.Schema.ObjectId,
+        ref:'User'},
 
-            images:[
-            {
-                type:String,
-            },
-            ],
-       
-           
-        },
-    
-        {
-            timestamps: true,  
-        }
-        );
-        const products = mongoose.model('products',productsSchema)
+    images: [
+      {
+        type: String,
+      },
+    ],
+  },
 
-        export default products;
+  {
+    timestamps: true,
+  }
+);
+
+productsSchema.pre(/^find/, function (next) {
+    this.populate({
+      
+      path:"seller",
+      select: "firstname lastname phone email address gender",
+    })
+    next();
+  });
+
+
+const products = mongoose.model("products", productsSchema);
+
+export default products;
