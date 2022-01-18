@@ -50,17 +50,10 @@ class orderController {
     if (!Order) {
       return res.status(400).json({ error: "Order not registerd" });
     }
-    return res.status(200).json({ message: "user is found", data: Order });
+    return res.status(200).json({ message: "order is found", data: Order });
   }
 
-  static async deleteOneOrder(req, res) {
-    const Order = await orderInfo.findByIdAndDelete(req.params.id);
-    if (!Order) {
-      return res.status(400).json({ error: "Order not deleted" });
-    }
-
-    return res.status(200).json({ message: "Order is deleted" });
-  }
+  
   //get all client who order product
 
   static async getAllClientOrder(req, res) {
@@ -82,24 +75,24 @@ class orderController {
 
     return res.status(200).json({ message: "Order is updated", data: Order });
   }
-  // static async changeOrderStatus(req, res) {
-  //   const { id, status } = req.body;
-  //   const order = await orderInfos.findByIdAndUpdate(
-  //     id,
-  //     { status: status },
-  //     { new: true }
-  //   );
-  //   if (!order) {
-  //     return res.status(400).json({ error: "failed to update status" });
-  //   }
-  //   sendSms(
-  //    order.user.userName,
-  //     order.products.productname,
-  //     order._id,
-  //     order.user.phone
-  //   );
-  //   return res.status(200).json({ message: "success", data: order });
-  // }
+  
+  static async changeOrderStatus(req, res) {
+    const {status} = req.body;
+    
+    const order = await orderInfo.findByIdAndUpdate(req.params.id, { status: status },{ new: true });
+    if (!order) {
+      return res.status(400).json({ error: "failed to update status" });
+    }
+    console.log(order)
+    sendSms.sendSmsToBuyer(
+      order.buyer.firstName,
+      order.product.productname,
+      order._id,
+      order.buyer.phone
+    );
+    return res.status(200).json({ message: "success", data: order });
+  }
 }
+
 
 export default orderController;

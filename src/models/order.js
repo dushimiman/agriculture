@@ -3,8 +3,9 @@ const agricultureSchema = new mongoose.Schema(
   {
     buyer: {
       type: mongoose.Schema.ObjectId,
-      ref: "User",
+      ref:"User",
     },
+
     
 
     product: {
@@ -28,12 +29,13 @@ const agricultureSchema = new mongoose.Schema(
 agricultureSchema.pre(/^find/, function (next) {
   this.populate({
     path: "buyer",
-    select: "firstname lastname userPhone email address gender",
+    select: "firstName lastName phone email address gender",
   }).populate({
     path: "product",
+    select:"productname"
   });
   next();
 });
-const Order = mongoose.model("Order", agricultureSchema);
+const Order = mongoose.model("order", agricultureSchema);
 
 export default Order;

@@ -32,7 +32,8 @@ class UserController {
     if (!users) {
       return res.status(400).json({ error: "user not registerd" });
     }
-    return res.status(200).json({ message: "user is found", data: users });
+    const token = tokenAuth.tokenGenerator({ user: users });
+    return res.status(200).json({ message: "user is found", data: users,  token: token });
   }
   static async deleteOneUser(req, res) {
     const users = await UserInfos.findByIdAndDelete(req.params.id);

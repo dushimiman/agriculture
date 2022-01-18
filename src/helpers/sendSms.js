@@ -11,14 +11,15 @@ export const sendSmsToBuyer = (userName, productName, orderId, userPhone) => {
   client.messages
     .create({
       body:
-        "Mukiriya mwiza" +
+        "Mukiriya mwiza " +
         userName +
-        "ibyo mwaguze" +
+        " ibyo mwasabye " +
         productName +
-        "mwamaze kwishyura" +
-        orderId +
-        "refId" +
-        orderId,
+        "byemejwe " +
+        orderId ,
+        
+        // "refId" +
+        // orderId,
       from: "+12543473164",
       to: userPhone,
     })
