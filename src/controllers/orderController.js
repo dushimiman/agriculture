@@ -37,13 +37,6 @@ class orderController {
     return res.status(200).json({ message: "order is found", data: Order });
   }
 
-  static async getAllOrdersbySellerId(req, res) {
-    const Order = await orderInfo.find({ user: req.user.id });
-    if (!Order) {
-      return res.status(400).json({ error: "you are not able to access this" });
-    }
-    return res.status(200).json({ message: "order is found", data: Order });
-  }
 
   static async getOneOrder(req, res) {
     const Order = await orderInfo.findById(req.params.id);
@@ -54,27 +47,7 @@ class orderController {
   }
 
   
-  //get all client who order product
 
-  static async getAllClientOrder(req, res) {
-  
-    const Order = await orderInfo.find();
-    if (!Order) {
-      return res.status(400).json({ error: "not yet ordered" });
-    }
-    return res.status(200).json({ message: "ordered product retrieved", data: Order });
-  }
-
-
-
-  static async patchallOrder(req, res) {
-    const Order = await orderInfo.findByIdAndDelete(req.params.id);
-    if (!Order) {
-      return res.status(400).json({ error: "Order not updated" });
-    }
-
-    return res.status(200).json({ message: "Order is updated", data: Order });
-  }
   
   static async changeOrderStatus(req, res) {
     const {status} = req.body;
